@@ -1,0 +1,84 @@
+﻿@model MengajiOneToOneSystem.Models.User
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="zxx">
+<head>
+    <title>Admin Log Masuk</title>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Google fonts -->
+    <link href="//fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="~/assets/css/style.css" type="text/css" media="all" />
+
+</head>
+<body>
+    <div class="signinform">
+        <h1>Borang Log Masuk Admin</h1>
+        @using (Html.BeginForm("Authorize", "User", FormMethod.Post))
+        {
+            <!-- container -->
+            <div class="container">
+                <!-- main content -->
+                <div class="w3l-form-info">
+                    <div class="w3_info">
+                        <h2>Log Masuk</h2>
+                        <form action="#" method="post">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                @Html.TextBoxFor(model => model.u_email, new { @class = "form-control", @placeholder = "Email Pengguna" })
+                                @Html.ValidationMessageFor(model => model.u_email)
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                @Html.PasswordFor(model => model.u_password, new { @class = "form-control", @placeholder = "Kata Laluan" })
+                                @Html.ValidationMessageFor(model => model.u_password)
+                            </div>
+                            <div >
+                                <td colspan="2">
+                                    <label class="field-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
+                                </td>
+                            </div>
+                            <div class="form-row bottom">
+                                <div class="form-check">
+                                    <input type="checkbox" id="remenber" name="remenber" value="remenber">
+                                    <label for="remenber">@Html.LabelFor(model => model.RememberMe)</label>
+                                </div>
+                                <a href="@Url.Action("ForgotPassword", "User")" class="forgot">Lupa Kata Laluan?</a>
+                            </div>
+                            <button class="btn btn-primary btn-block" type="submit">Log Masuk</button>
+                        </form>
+                        
+                        <p class="account">Tiada akaun? <a href="#signup">Daftar Masuk</a></p>
+                    </div>
+                </div>
+                <!-- //main content -->
+            </div>
+            <!-- //container -->
+            <!-- footer -->
+            <div class="footer">
+                <p>
+                    &copy; Borang log masuk admin. Hak cipta terpelihara.
+                </p>
+            </div>
+        }
+
+    </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/assets/js/fontawesome.js"></script>
+</body>
+</html>
