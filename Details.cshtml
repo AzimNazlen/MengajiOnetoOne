@@ -1,0 +1,57 @@
+﻿@model MengajiOneToOneSystem.Models.PerformanceReport
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Performance Report</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.p_month)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.p_month)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.student_performance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.student_performance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.class_date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.class_date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.class_ref)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.class_ref)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.p_status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.p_status)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.p_id }) |
+    @Html.ActionLink("Back to List", "IndexTeacher")
+</p>
