@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="db_motoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Class_Package">
+    <Key>
+      <PropertyRef Name="cp_id" />
+    </Key>
+    <Property Name="cp_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cp_name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="cp_fees" Type="Double" />
+    <Property Name="class_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ClassRecord" Relationship="Self.FK_Class_Package_ClassRecord" FromRole="Class_Package" ToRole="ClassRecord" />
+  </EntityType>
+  <EntityType Name="ClassRecord">
+    <Key>
+      <PropertyRef Name="class_id" />
+    </Key>
+    <Property Name="class_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="u_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Class_Package" Relationship="Self.FK_Class_Package_ClassRecord" FromRole="ClassRecord" ToRole="Class_Package" />
+    <NavigationProperty Name="User" Relationship="Self.FK_ClassRecord_User" FromRole="ClassRecord" ToRole="User" />
+  </EntityType>
+  <EntityType Name="PerformanceReport">
+    <Key>
+      <PropertyRef Name="p_id" />
+    </Key>
+    <Property Name="p_month" Type="Int32" />
+    <Property Name="u_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="student_performance" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="class_date" Type="DateTime" Precision="0" />
+    <Property Name="class_ref" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="p_status" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="p_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="User" Relationship="Self.FK_PerformanceReport_User" FromRole="PerformanceReport" ToRole="User" />
+  </EntityType>
+  <EntityType Name="SalaryInvoice">
+    <Key>
+      <PropertyRef Name="i_id" />
+    </Key>
+    <Property Name="i_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="i_amount" Type="Double" />
+    <Property Name="i_status" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="u_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="i_month" Type="Int32" />
+    <NavigationProperty Name="User" Relationship="Self.FK_SalaryInvoice_User" FromRole="SalaryInvoice" ToRole="User" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="u_id" />
+    </Key>
+    <Property Name="u_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="u_password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="u_email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="u_fname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="u_lname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="u_roles" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="u_contact" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="u_passcode" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="u_pic" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ClassRecords" Relationship="Self.FK_ClassRecord_User" FromRole="User" ToRole="ClassRecord" />
+    <NavigationProperty Name="PerformanceReports" Relationship="Self.FK_PerformanceReport_User" FromRole="User" ToRole="PerformanceReport" />
+    <NavigationProperty Name="SalaryInvoices" Relationship="Self.FK_SalaryInvoice_User" FromRole="User" ToRole="SalaryInvoice" />
+  </EntityType>
+  <Association Name="FK_Class_Package_ClassRecord">
+    <End Role="ClassRecord" Type="Self.ClassRecord" Multiplicity="0..1" />
+    <End Role="Class_Package" Type="Self.Class_Package" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClassRecord">
+        <PropertyRef Name="class_id" />
+      </Principal>
+      <Dependent Role="Class_Package">
+        <PropertyRef Name="class_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClassRecord_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="ClassRecord" Type="Self.ClassRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="u_id" />
+      </Principal>
+      <Dependent Role="ClassRecord">
+        <PropertyRef Name="u_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PerformanceReport_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="PerformanceReport" Type="Self.PerformanceReport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="u_id" />
+      </Principal>
+      <Dependent Role="PerformanceReport">
+        <PropertyRef Name="u_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SalaryInvoice_User">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="SalaryInvoice" Type="Self.SalaryInvoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="u_id" />
+      </Principal>
+      <Dependent Role="SalaryInvoice">
+        <PropertyRef Name="u_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="db_motoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Class_Packages" EntityType="Self.Class_Package" />
+    <EntitySet Name="ClassRecords" EntityType="Self.ClassRecord" />
+    <EntitySet Name="PerformanceReports" EntityType="Self.PerformanceReport" />
+    <EntitySet Name="SalaryInvoices" EntityType="Self.SalaryInvoice" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="FK_Class_Package_ClassRecord" Association="Self.FK_Class_Package_ClassRecord">
+      <End Role="ClassRecord" EntitySet="ClassRecords" />
+      <End Role="Class_Package" EntitySet="Class_Packages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClassRecord_User" Association="Self.FK_ClassRecord_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ClassRecord" EntitySet="ClassRecords" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PerformanceReport_User" Association="Self.FK_PerformanceReport_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="PerformanceReport" EntitySet="PerformanceReports" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SalaryInvoice_User" Association="Self.FK_SalaryInvoice_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="SalaryInvoice" EntitySet="SalaryInvoices" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
